@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Prime Video</string>
+
+    <string name="bottom_menu_home">Página inicial</string>
+    <string name="bottom_menu_store">Loja</string>
+    <string name="bottom_menu_tv">TV ao vivo</string>
+    <string name="bottom_menu_downloads">Downloads</string>
+    <string name="bottom_menu_search">Pesquisar</string>
+</resources>
