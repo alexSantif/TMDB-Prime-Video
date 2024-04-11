@@ -22,4 +22,8 @@ dependencyResolutionManagement {
 rootProject.name = "TMDB-Prime-Video"
 include(":app")
 include(":home")
+include(":store")
+include(":live-tv")
+include(":downloads")
+include(":search")
 include(":core")

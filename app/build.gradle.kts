@@ -41,11 +41,19 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+
+    buildFeatures {
+        viewBinding = true
+    }
 }
 
 dependencies {
 
     implementation(project(":home"))
+    implementation(project(":store"))
+    implementation(project(":live-tv"))
+    implementation(project(":downloads"))
+    implementation(project(":search"))
     implementation(project(":core"))
 
     implementation(libs.androidx.core.ktx)
@@ -54,7 +62,12 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    implementation(libs.koin.core)
+    implementation(libs.koin.android)
 }

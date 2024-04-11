@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/tmdb_navigation"
+    app:startDestination="@id/fragment_home">
+
+    <fragment
+        android:id="@+id/fragment_home"
+        android:name="br.com.study.tmdb_prime_video.home.presentation.HomeFragment"
+        android:label="HomeFragment" />
+    <fragment
+        android:id="@+id/fragment_store"
+        android:name="br.com.study.tmdb_prime_video.store.presentation.StoreFragment"
+        android:label="StoreFragment" />
+    <fragment
+        android:id="@+id/fragment_tv"
+        android:name="br.com.study.tmdb_prime_video.livetv.presentation.LiveTvFragment"
+        android:label="LiveTvFragment" />
+    <fragment
+        android:id="@+id/fragment_downloads"
+        android:name="br.com.study.tmdb_prime_video.downloads.presentation.DownloadsFragment"
+        android:label="DownloadsFragment" />
+    <fragment
+        android:id="@+id/fragment_search"
+        android:name="br.com.study.tmdb_prime_video.search.presentation.SearchFragment"
+        android:label="SearchFragment" />
+</navigation>

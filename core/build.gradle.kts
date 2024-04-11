@@ -45,4 +45,7 @@ dependencies {
     implementation(libs.gson.converter)
     implementation(libs.okhttp)
     implementation(libs.logging.interceptor)
+
+    implementation(libs.koin.core)
+    implementation(libs.koin.android)
 }

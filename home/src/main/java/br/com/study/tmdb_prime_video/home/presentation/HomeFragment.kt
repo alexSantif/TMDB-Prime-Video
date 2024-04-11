@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import br.com.study.tmdb_prime_video.home.data.model.MovieModelData
 import br.com.study.tmdb_prime_video.home.databinding.FragmentHomeBinding
 import br.com.study.tmdb_prime_video.home.presentation.adapter.FeaturedMoviesAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -38,7 +37,7 @@ class HomeFragment : Fragment() {
         homeViewModel.getMovies()
         homeViewModel.movies.observe(viewLifecycleOwner) { data ->
             data?.data?.let { movies ->
-                featuredMoviesAdapter = FeaturedMoviesAdapter(requireContext(), movies)
+                featuredMoviesAdapter = FeaturedMoviesAdapter(requireContext(), imagesTest())
                 binding.vpFeaturedMovies.adapter = featuredMoviesAdapter
                 binding.iFeaturedMovies.setViewPager(binding.vpFeaturedMovies)
             } ?: let {
@@ -47,6 +46,14 @@ class HomeFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun imagesTest(): ArrayList<String> {
+        return arrayListOf(
+            "https://i.insider.com/660f07f116bde8d4ead5de2b?width=1200&format=jpeg",
+            "https://i.insider.com/660f07f116bde8d4ead5de2b?width=1200&format=jpeg",
+            "https://i.insider.com/660f07f116bde8d4ead5de2b?width=1200&format=jpeg"
+        )
     }
 
     override fun onDestroyView() {
