@@ -4,12 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingTop="8dp"
     tools:context=".presentation.HomeFragment">
 
     <ImageView
         android:id="@+id/iv_app_logo_topbar"
-        android:layout_width="100dp"
-        android:layout_height="36dp"
+        android:layout_width="84dp"
+        android:layout_height="32dp"
         android:layout_marginStart="16dp"
         android:contentDescription="@string/app_logo_description"
         android:src="@drawable/prime_video_logo"
@@ -18,78 +19,77 @@
 
     <ImageView
         android:id="@+id/iv_stream_image_topbar"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         android:layout_marginEnd="16dp"
         android:contentDescription="@string/app_logo_description"
         android:src="@drawable/ic_cast"
+        app:layout_constraintBottom_toBottomOf="@+id/iv_profile_topbar"
         app:layout_constraintEnd_toStartOf="@+id/iv_profile_topbar"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/iv_profile_topbar" />
 
     <ImageView
         android:id="@+id/iv_profile_topbar"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
         android:layout_marginEnd="16dp"
         android:contentDescription="@string/app_logo_description"
         android:src="@drawable/ic_profile"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
-        android:id="@+id/ll_filters_container"
-        android:layout_width="match_parent"
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tl_categories"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
-        android:orientation="horizontal"
+        android:background="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iv_app_logo_topbar">
+        app:layout_constraintTop_toBottomOf="@+id/iv_profile_topbar"
+        app:tabBackground="@drawable/tabs_selector"
+        app:tabIndicator="@null"
+        app:tabSelectedTextColor="@color/black"
+        app:tabTextAppearance="@style/MineCustomTabText"
+        app:tabTextColor="@color/white">
 
-        <Button
-            android:id="@+id/bt_filter_all"
+        <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/button_filter_all_text" />
+            android:text="Todos" />
 
-        <Button
-            android:id="@+id/bt_filter_movies"
+        <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/button_filter_movies_text" />
+            android:text="Filmes" />
 
-        <Button
-            android:id="@+id/bt_filter_series"
+        <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/button_filter_series_text" />
+            android:text="Séries" />
 
-        <Button
-            android:id="@+id/bt_filter_sports"
+        <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/button_filter_sports_text" />
-    </LinearLayout>
+            android:text="Esportes" />
+    </com.google.android.material.tabs.TabLayout>
 
-    <androidx.viewpager.widget.ViewPager
+    <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/vp_featured_movies"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        app:layout_constraintTop_toBottomOf="@+id/ll_filters_container"
+        android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/tl_categories" />
+
     <me.relex.circleindicator.CircleIndicator
         android:id="@+id/i_featured_movies"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        app:layout_constraintStart_toStartOf="parent"
+        android:elevation="4dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/vp_featured_movies"
-        android:elevation="4dp"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/vp_featured_movies" />
 </androidx.constraintlayout.widget.ConstraintLayout>

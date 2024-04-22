@@ -3,14 +3,13 @@ package br.com.study.tmdb_prime_video.home.domain
 import br.com.study.tmdb_prime_video.core.api.AppResult
 import br.com.study.tmdb_prime_video.home.data.model.MovieModel
 import br.com.study.tmdb_prime_video.home.data.model.MovieModelData
-import br.com.study.tmdb_prime_video.home.data.model.MoviesResponse
-import br.com.study.tmdb_prime_video.home.data.model.SearchResponse
+import br.com.study.tmdb_prime_video.home.data.model.MovieResponse
 import br.com.study.tmdb_prime_video.home.data.repository.HomeRepository
 
 class HomeUseCase(private val repository: HomeRepository) {
 
-    suspend fun getMovies(): MovieModel? {
-        return when (val moviesResult = repository.getMovies()) {
+    suspend fun getPopularMovies(): MovieModel? {
+        return when (val moviesResult = repository.getPopularMovies()) {
             is AppResult.Success -> {
                 mapResponse(moviesResult.successData)
             }
@@ -35,23 +34,13 @@ class HomeUseCase(private val repository: HomeRepository) {
 
     private fun mapResponse(movies: Any): MovieModel {
         val moviesList = mutableListOf<MovieModelData>()
-        if (movies is MoviesResponse) {
-            movies.items?.forEach { item ->
+        if (movies is MovieResponse) {
+            movies.results?.forEach { item ->
                 moviesList.add(
                     MovieModelData(
                         id = item.id,
-                        image = item.image,
+                        releaseDate = item.releaseDate,
                         title = item.title
-                    )
-                )
-            }
-        } else if (movies is SearchResponse) {
-            movies.results?.forEach { result ->
-                moviesList.add(
-                    MovieModelData(
-                        id = result.id,
-                        image = result.image,
-                        title = result.title
                     )
                 )
             }

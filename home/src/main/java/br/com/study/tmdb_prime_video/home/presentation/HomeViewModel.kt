@@ -13,9 +13,9 @@ class HomeViewModel(private val useCase: HomeUseCase) : ViewModel() {
 
     val searchMovie = MutableLiveData<ResourceData?>()
 
-    fun getMovies() {
+    fun getPopularMovies() {
         viewModelScope.launch {
-            val moviesResult = useCase.getMovies()
+            val moviesResult = useCase.getPopularMovies()
             moviesResult?.data?.let {
                 val resourceData = ResourceData(data = it)
                 movies.value = resourceData

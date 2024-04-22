@@ -1,48 +1,46 @@
 package br.com.study.tmdb_prime_video.home.presentation.adapter
 
-import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import androidx.viewpager.widget.PagerAdapter
-import androidx.viewpager.widget.ViewPager
+import androidx.recyclerview.widget.RecyclerView
 import br.com.study.tmdb_prime_video.home.R
+import br.com.study.tmdb_prime_video.home.databinding.ImageSliderItemBinding
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 
-class FeaturedMoviesAdapter(private val context: Context, private var imageList: ArrayList<String>) :
-    PagerAdapter() {
+class FeaturedMoviesAdapter(private val imageUrlList: List<String>) :
+    RecyclerView.Adapter<FeaturedMoviesAdapter.ViewPagerViewHolder>() {
 
-    override fun getCount(): Int {
-        return imageList.size
-    }
+    inner class ViewPagerViewHolder(val binding: ImageSliderItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
 
-    override fun isViewFromObject(view: View, `object`: Any): Boolean {
-        return view === `object`
-    }
+        fun setData(imageUrl: String) {
 
-    override fun instantiateItem(container: ViewGroup, position: Int): Any {
-        val view: View =
-            (context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater).inflate(
-                R.layout.image_slider_item, null
-            )
-        val ivImages = view.findViewById<ImageView>(R.id.iv_images)
-
-        imageList[position].let {
-            Glide.with(context)
-                .load(it)
-                .into(ivImages);
+            Glide.with(binding.root.context)
+                .load(imageUrl)
+//                .error(R.drawable.ic_baseline_error_outline_24)
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .into(binding.ivImage)
         }
 
-
-        val vp = container as ViewPager
-        vp.addView(view, 0)
-        return view
     }
 
-    override fun destroyItem(container: ViewGroup, position: Int, `object`: Any) {
-        val vp = container as ViewPager
-        val view = `object` as View
-        vp.removeView(view)
+    override fun getItemCount(): Int = imageUrlList.size
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewPagerViewHolder {
+
+        val binding = ImageSliderItemBinding.inflate(
+            LayoutInflater.from(parent.context),
+            parent,
+            false
+        )
+
+        return ViewPagerViewHolder(binding)
     }
+
+    override fun onBindViewHolder(holder: ViewPagerViewHolder, position: Int) {
+
+        holder.setData(imageUrlList[position])
+    }
+
 }

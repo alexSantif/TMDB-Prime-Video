@@ -3,15 +3,15 @@ package br.com.study.tmdb_prime_video.home.data.repository
 import br.com.study.tmdb_prime_video.core.api.AppResult
 import br.com.study.tmdb_prime_video.core.api.handleApiError
 import br.com.study.tmdb_prime_video.core.api.handleSuccess
-import br.com.study.tmdb_prime_video.home.data.model.MoviesResponse
+import br.com.study.tmdb_prime_video.home.data.model.MovieResponse
 import br.com.study.tmdb_prime_video.home.data.model.SearchResponse
 import br.com.study.tmdb_prime_video.home.data.network.HomeApi
 
 class HomeRepositoryImpl(private val api: HomeApi) : HomeRepository {
 
-    override suspend fun getMovies(): AppResult<MoviesResponse> {
+    override suspend fun getPopularMovies(): AppResult<MovieResponse> {
         return try {
-            val response = api.getMovies()
+            val response = api.getPopularMovies()
             if (response.isSuccessful) {
                 handleSuccess(response)
             } else {
