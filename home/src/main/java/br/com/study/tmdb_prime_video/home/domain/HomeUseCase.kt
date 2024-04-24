@@ -8,47 +8,30 @@ import br.com.study.tmdb_prime_video.home.data.repository.HomeRepository
 
 class HomeUseCase(private val repository: HomeRepository) {
 
-    suspend fun getPopularMovies(): MovieModel? {
+    suspend fun getPopularMovies(): MovieResponse? {
         return when (val moviesResult = repository.getPopularMovies()) {
             is AppResult.Success -> {
-                mapResponse(moviesResult.successData)
-            }
-            is AppResult.Error -> {
-                mapError(moviesResult.exception.message)
+                moviesResult.value
             }
             else -> null
         }
     }
 
-    suspend fun getSearchMovie(text: String?): MovieModel? {
-        return when (val moviesResult = repository.getSearchMovie(text)) {
+    suspend fun getNowPlayingMovies(): MovieResponse? {
+        return when (val moviesResult = repository.getNowPlayingMovies()) {
             is AppResult.Success -> {
-                mapResponse(moviesResult.successData)
-            }
-            is AppResult.Error -> {
-                mapError(moviesResult.exception.message)
+                moviesResult.value
             }
             else -> null
         }
     }
 
-    private fun mapResponse(movies: Any): MovieModel {
-        val moviesList = mutableListOf<MovieModelData>()
-        if (movies is MovieResponse) {
-            movies.results?.forEach { item ->
-                moviesList.add(
-                    MovieModelData(
-                        id = item.id,
-                        releaseDate = item.releaseDate,
-                        title = item.title
-                    )
-                )
+    suspend fun getUpcomingMovies(): MovieResponse? {
+        return when (val moviesResult = repository.getUpcomingMovies()) {
+            is AppResult.Success -> {
+                moviesResult.value
             }
+            else -> null
         }
-        return MovieModel(
-            data = moviesList
-        )
     }
-
-    private fun mapError(error: String?): MovieModel = MovieModel(error = error)
 }

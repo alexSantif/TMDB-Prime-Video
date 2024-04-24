@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Prime Video</string>
+
+    <string name="bottom_menu_home">Initial page</string>
+    <string name="bottom_menu_store">Store</string>
+    <string name="bottom_menu_tv">Live TV</string>
+    <string name="bottom_menu_downloads">Downloads</string>
+    <string name="bottom_menu_search">Search</string>
+</resources>

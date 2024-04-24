@@ -14,13 +14,18 @@ interface HomeApi {
     @GET("$POPULAR_MOVIES$")
     suspend fun getPopularMovies(): Response<MovieResponse>
 
-    @GET("$SEARCH_MOVIE$/{$SEARCH_TEXT}")
-    suspend fun getSearchMovie(@Path(SEARCH_TEXT) text: String?): Response<SearchResponse>
+    @Headers(BuildConfig.TMDB_BEARER)
+    @GET("$NOW_PLAYING_MOVIES$")
+    suspend fun getNowPlayingMovies(): Response<MovieResponse>
+
+    @Headers(BuildConfig.TMDB_BEARER)
+    @GET("$UPCOMING_MOVIES$")
+    suspend fun getUpcomingMovies(): Response<MovieResponse>
 
     companion object {
 
         private const val POPULAR_MOVIES = "movie/popular?language=en-US&page=1"
-        private const val SEARCH_MOVIE = "searchmovie/"
-        private const val SEARCH_TEXT = "text"
+        private const val NOW_PLAYING_MOVIES = "movie/now_playing?language=en-US&page=1"
+        private const val UPCOMING_MOVIES = "movie/upcoming?language=en-US&page=1"
     }
 }

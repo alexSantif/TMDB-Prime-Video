@@ -6,7 +6,9 @@ import br.com.study.tmdb_prime_video.home.data.model.SearchResponse
 
 interface HomeRepository {
 
-    suspend fun getPopularMovies(): AppResult<MovieResponse>
+    suspend fun getPopularMovies(): AppResult<MovieResponse?>
 
-    suspend fun getSearchMovie(text: String?): AppResult<SearchResponse>
+    suspend fun getNowPlayingMovies(): AppResult<MovieResponse?>
+
+    suspend fun getUpcomingMovies(): AppResult<MovieResponse?>
 }

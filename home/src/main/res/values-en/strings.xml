@@ -1,0 +1,8 @@
+<resources>
+
+    <string name="app_logo_description">Logo Prime Video</string>
+    <string name="button_filter_all_text">All</string>
+    <string name="button_filter_movies_text">Movies</string>
+    <string name="button_filter_series_text">Series</string>
+    <string name="button_filter_sports_text">Sports</string>
+</resources>

@@ -1,23 +1,26 @@
 package br.com.study.tmdb_prime_video.core.api
 
-import retrofit2.Response
-
 sealed class AppResult<out T> {
 
-    data class Success<out T>(val successData: T) : AppResult<T>()
-    class Error(
-        val exception: java.lang.Exception,
-        val message: String = exception.localizedMessage.orEmpty()
-    ) : AppResult<Nothing>()
+    data class Success<out T>(val value: T) : AppResult<T>()
+    data class Error(val exception: Exception) : AppResult<Nothing>()
+
+    fun <M> map(mapper: (originalData: T) -> M): AppResult<M> = when (this) {
+        is Success -> Success(mapper(value))
+        is Error -> Error(exception = exception)
+    }
 }
 
-fun <T : Any> handleApiError(resp: Response<T>): AppResult.Error {
-    val error = ApiErrorUtils.parseError(resp)
-    return AppResult.Error(Exception(error.message))
+inline fun <T> AppResult<T>.onFailure(action: (exception: Exception) -> Unit): AppResult<T> {
+    if (this is AppResult.Error) {
+        action(exception)
+    }
+    return this
 }
 
-fun <T : Any> handleSuccess(response: Response<T>): AppResult<T> {
-    response.body()?.let {
-        return AppResult.Success(it)
-    } ?: return handleApiError(response)
+inline fun <T> AppResult<T>.onSuccess(action: (value: T) -> Unit): AppResult<T> {
+    if (this is AppResult.Success<T>) {
+        action(value)
+    }
+    return this
 }

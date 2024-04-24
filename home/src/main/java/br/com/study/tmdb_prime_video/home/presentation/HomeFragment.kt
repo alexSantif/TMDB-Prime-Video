@@ -1,15 +1,29 @@
 package br.com.study.tmdb_prime_video.home.presentation
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
+import br.com.study.tmdb_prime_video.core.base.BaseAdapter
+import br.com.study.tmdb_prime_video.core.mock.parseJsonToModel
+import br.com.study.tmdb_prime_video.core.mock.readJsonFromAssets
+import br.com.study.tmdb_prime_video.home.data.model.MovieResponse
 import br.com.study.tmdb_prime_video.home.databinding.FragmentHomeBinding
 import br.com.study.tmdb_prime_video.home.presentation.adapter.FeaturedMoviesAdapter
+import br.com.study.tmdb_prime_video.home.presentation.adapter.MovieCoverAdapter
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import kotlinx.coroutines.flow.collectLatest
 import org.koin.androidx.viewmodel.ext.android.viewModel
+
 
 class HomeFragment : Fragment() {
 
@@ -31,21 +45,68 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setupViewPager()
         getFeaturedMovies()
     }
 
     private fun getFeaturedMovies() {
-        homeViewModel.getPopularMovies()
-        homeViewModel.movies.observe(viewLifecycleOwner) { data ->
-            data?.data?.let { movies ->
-                setupViewPager()
-            } ?: let {
-                data?.error?.let { error ->
-                    Toast.makeText(requireContext(), "erro teste", Toast.LENGTH_LONG).show()
-                }
+        homeViewModel.getHomeMovies()
+//        lifecycleScope.launchWhenStarted {
+//            homeViewModel.popularMoviesUiState.collectLatest { popularMovies ->
+//                println(">>>> popularMovies " + popularMovies.data)
+//            }
+//        }
+//        lifecycleScope.launchWhenStarted {
+//            homeViewModel.nowPlayingMoviesUiState.collectLatest { nowPlayingMovies ->
+//                println(">>>> nowPlayingMovies " + nowPlayingMovies.data)
+//            }
+//        }
+//        lifecycleScope.launchWhenStarted {
+//            homeViewModel.upcomingMoviesUiState.collectLatest { upcomingMovies ->
+//                println(">>>> upcomingMovies " + upcomingMovies.data)
+//            }
+//        }
+        val popularMovies =
+            parseJsonToModel(readJsonFromAssets(requireContext(), "popular_movies_200.json")) as MovieResponse
+        createMoviesList("Filmes mais populares", popularMovies)
+
+        val nowPlayingMovies =
+            parseJsonToModel(readJsonFromAssets(requireContext(), "now_playing_movies_200.json")) as MovieResponse
+        createMoviesList("Filmes em destaque", nowPlayingMovies)
+
+        val upcomingMovies =
+            parseJsonToModel(readJsonFromAssets(requireContext(), "upcoming_movies_200.json")) as MovieResponse
+        createMoviesList("Prévias", upcomingMovies)
+    }
+
+    private fun createMoviesList(title: String, movies: MovieResponse) {
+        val listTitle = TextView(requireContext())
+        listTitle.textSize = 20f
+        listTitle.text = title
+        listTitle.setTextColor(resources.getColor(android.R.color.white))
+
+        binding.llListsContainer.addView(listTitle)
+
+        val rvMovies = RecyclerView(requireContext())
+        val params = RecyclerView.LayoutParams(
+            RecyclerView.LayoutParams.WRAP_CONTENT,
+            RecyclerView.LayoutParams.WRAP_CONTENT
+        )
+        rvMovies.layoutParams = params
+
+        val layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL ,false)
+        rvMovies.adapter = BaseAdapter {
+            MovieCoverAdapter(it)
+        }.apply {
+            this.items = movies.results?.toMutableList()!!
+            this.onClick = {
+                Toast.makeText(requireContext(), "lista ta aparecendo", Toast.LENGTH_SHORT).show()
             }
         }
-        setupViewPager()
+        rvMovies.setLayoutManager(layoutManager)
+        rvMovies.visibility = View.VISIBLE
+
+        binding.llListsContainer.addView(rvMovies)
     }
 
     private fun setupViewPager() {
