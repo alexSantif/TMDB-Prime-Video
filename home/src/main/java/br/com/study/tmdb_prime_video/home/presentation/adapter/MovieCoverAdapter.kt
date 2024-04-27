@@ -21,7 +21,7 @@ class MovieCoverAdapter(viewGroup: ViewGroup) :
 
         Glide
             .with(itemView.context)
-            .load(item.posterPath)
+            .load("https://image.tmdb.org/t/p/original" + item.posterPath)
             .centerCrop()
             .into(itemView.findViewById(R.id.iv_movie_cover))
     }

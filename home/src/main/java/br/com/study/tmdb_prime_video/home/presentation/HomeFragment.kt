@@ -1,27 +1,25 @@
 package br.com.study.tmdb_prime_video.home.presentation
 
-import android.content.Context
+import android.graphics.Typeface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import br.com.study.tmdb_prime_video.core.base.BaseAdapter
 import br.com.study.tmdb_prime_video.core.mock.parseJsonToModel
 import br.com.study.tmdb_prime_video.core.mock.readJsonFromAssets
+import br.com.study.tmdb_prime_video.core.R
 import br.com.study.tmdb_prime_video.home.data.model.MovieResponse
 import br.com.study.tmdb_prime_video.home.databinding.FragmentHomeBinding
 import br.com.study.tmdb_prime_video.home.presentation.adapter.FeaturedMoviesAdapter
 import br.com.study.tmdb_prime_video.home.presentation.adapter.MovieCoverAdapter
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
-import kotlinx.coroutines.flow.collectLatest
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -81,9 +79,16 @@ class HomeFragment : Fragment() {
 
     private fun createMoviesList(title: String, movies: MovieResponse) {
         val listTitle = TextView(requireContext())
-        listTitle.textSize = 20f
+        val listTitleParams = LinearLayout.LayoutParams(
+            RecyclerView.LayoutParams.WRAP_CONTENT,
+            RecyclerView.LayoutParams.WRAP_CONTENT
+        )
+        listTitle.textSize = 18f
         listTitle.text = title
+        listTitle.typeface = Typeface.DEFAULT_BOLD
         listTitle.setTextColor(resources.getColor(android.R.color.white))
+        listTitle.layoutParams = listTitleParams
+        listTitle.setMargins(32, 0, 32, 0)
 
         binding.llListsContainer.addView(listTitle)
 
@@ -93,6 +98,7 @@ class HomeFragment : Fragment() {
             RecyclerView.LayoutParams.WRAP_CONTENT
         )
         rvMovies.layoutParams = params
+        rvMovies.setMargins(0, 8, 0, 8)
 
         val layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL ,false)
         rvMovies.adapter = BaseAdapter {
@@ -107,6 +113,25 @@ class HomeFragment : Fragment() {
         rvMovies.visibility = View.VISIBLE
 
         binding.llListsContainer.addView(rvMovies)
+    }
+
+    fun View.setMargins(
+        left: Int? = null,
+        top: Int? = null,
+        right: Int? = null,
+        bottom: Int? = null
+    ) {
+        val lp = layoutParams as? ViewGroup.MarginLayoutParams
+            ?: return
+
+        lp.setMargins(
+            left ?: lp.leftMargin,
+            top ?: lp.topMargin,
+            right ?: lp.rightMargin,
+            bottom ?: lp.bottomMargin
+        )
+
+        layoutParams = lp
     }
 
     private fun setupViewPager() {
