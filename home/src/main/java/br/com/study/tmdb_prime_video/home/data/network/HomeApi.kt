@@ -22,10 +22,15 @@ interface HomeApi {
     @GET("$UPCOMING_MOVIES$")
     suspend fun getUpcomingMovies(): Response<MovieResponse>
 
+    @Headers(BuildConfig.TMDB_BEARER)
+    @GET("$TOP_RATED_MOVIES$")
+    suspend fun getTopRatedMovies(): Response<MovieResponse>
+
     companion object {
 
         private const val POPULAR_MOVIES = "movie/popular?language=en-US&page=1"
         private const val NOW_PLAYING_MOVIES = "movie/now_playing?language=en-US&page=1"
         private const val UPCOMING_MOVIES = "movie/upcoming?language=en-US&page=1"
+        private const val TOP_RATED_MOVIES = "movie/top_rated?language=en-US&page=1"
     }
 }

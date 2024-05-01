@@ -1,105 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="8dp"
+    android:fillViewport="true"
     tools:context=".presentation.HomeFragment">
 
-    <ImageView
-        android:id="@+id/iv_app_logo_topbar"
-        android:layout_width="84dp"
-        android:layout_height="32dp"
-        android:layout_marginStart="16dp"
-        android:contentDescription="@string/app_logo_description"
-        android:src="@drawable/prime_video_logo"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/iv_stream_image_topbar"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_marginEnd="16dp"
-        android:contentDescription="@string/app_logo_description"
-        android:src="@drawable/ic_cast"
-        app:layout_constraintBottom_toBottomOf="@+id/iv_profile_topbar"
-        app:layout_constraintEnd_toStartOf="@+id/iv_profile_topbar"
-        app:layout_constraintTop_toTopOf="@+id/iv_profile_topbar" />
-
-    <ImageView
-        android:id="@+id/iv_profile_topbar"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        android:layout_marginEnd="16dp"
-        android:contentDescription="@string/app_logo_description"
-        android:src="@drawable/ic_profile"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tl_categories"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:background="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iv_profile_topbar"
-        app:tabBackground="@drawable/tabs_selector"
-        app:tabIndicator="@null"
-        app:tabSelectedTextColor="@color/black"
-        app:tabTextAppearance="@style/MineCustomTabText"
-        app:tabTextColor="@color/white">
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Todos" />
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Filmes" />
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Séries" />
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Esportes" />
-    </com.google.android.material.tabs.TabLayout>
-
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/vp_featured_movies"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tl_categories" />
+        android:layout_height="match_parent"
+        android:layout_marginBottom="100dp"
+        android:paddingTop="8dp">
 
-    <me.relex.circleindicator.CircleIndicator
-        android:id="@+id/i_featured_movies"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:elevation="4dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/vp_featured_movies" />
+        <ImageView
+            android:id="@+id/iv_app_logo_topbar"
+            android:layout_width="84dp"
+            android:layout_height="32dp"
+            android:layout_marginStart="16dp"
+            android:contentDescription="@string/app_logo_description"
+            android:src="@drawable/prime_video_logo"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
-        android:id="@+id/ll_lists_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/vp_featured_movies" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <ImageView
+            android:id="@+id/iv_stream_image_topbar"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:layout_marginEnd="16dp"
+            android:contentDescription="@string/app_logo_description"
+            android:src="@drawable/ic_cast"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_profile_topbar"
+            app:layout_constraintEnd_toStartOf="@+id/iv_profile_topbar"
+            app:layout_constraintTop_toTopOf="@+id/iv_profile_topbar" />
+
+        <ImageView
+            android:id="@+id/iv_profile_topbar"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:layout_marginEnd="16dp"
+            android:contentDescription="@string/app_logo_description"
+            android:src="@drawable/ic_profile"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tl_categories"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:background="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_profile_topbar"
+            app:tabBackground="@drawable/tabs_selector"
+            app:tabIndicator="@null"
+            app:tabSelectedTextColor="@color/black"
+            app:tabTextAppearance="@style/MineCustomTabText"
+            app:tabTextColor="@color/white">
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Todos" />
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Filmes" />
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Séries" />
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Esportes" />
+        </com.google.android.material.tabs.TabLayout>
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/vp_featured_movies"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginTop="16dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tl_categories" />
+
+        <LinearLayout
+            android:id="@+id/i_featured_movies"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/vp_featured_movies" />
+
+        <LinearLayout
+            android:id="@+id/ll_lists_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/i_featured_movies" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

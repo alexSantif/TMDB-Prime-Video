@@ -44,4 +44,17 @@ class HomeRepositoryImpl(private val api: HomeApi) : HomeRepository {
             AppResult.Error(e)
         }
     }
+
+    override suspend fun getTopRatedMovies(): AppResult<MovieResponse?> {
+        return try {
+            val response = api.getTopRatedMovies()
+            if (response.isSuccessful) {
+                AppResult.Success(response.body())
+            } else {
+                AppResult.Error(Exception(response.message()))
+            }
+        } catch (e: Exception) {
+            AppResult.Error(e)
+        }
+    }
 }

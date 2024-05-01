@@ -34,4 +34,13 @@ class HomeUseCase(private val repository: HomeRepository) {
             else -> null
         }
     }
+
+    suspend fun getTopRatedMovies(): MovieResponse? {
+        return when (val moviesResult = repository.getTopRatedMovies()) {
+            is AppResult.Success -> {
+                moviesResult.value
+            }
+            else -> null
+        }
+    }
 }

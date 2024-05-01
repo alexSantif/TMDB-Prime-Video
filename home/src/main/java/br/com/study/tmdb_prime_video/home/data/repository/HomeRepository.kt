@@ -11,4 +11,6 @@ interface HomeRepository {
     suspend fun getNowPlayingMovies(): AppResult<MovieResponse?>
 
     suspend fun getUpcomingMovies(): AppResult<MovieResponse?>
+
+    suspend fun getTopRatedMovies(): AppResult<MovieResponse?>
 }
