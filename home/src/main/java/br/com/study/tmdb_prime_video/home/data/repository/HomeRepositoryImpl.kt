@@ -57,4 +57,43 @@ class HomeRepositoryImpl(private val api: HomeApi) : HomeRepository {
             AppResult.Error(e)
         }
     }
+
+    override suspend fun getOnTheAirSeries(): AppResult<MovieResponse?> {
+        return try {
+            val response = api.getOnTheAirSeries()
+            if (response.isSuccessful) {
+                AppResult.Success(response.body())
+            } else {
+                AppResult.Error(Exception(response.message()))
+            }
+        } catch (e: Exception) {
+            AppResult.Error(e)
+        }
+    }
+
+    override suspend fun getPopularSeries(): AppResult<MovieResponse?> {
+        return try {
+            val response = api.getPopularSeries()
+            if (response.isSuccessful) {
+                AppResult.Success(response.body())
+            } else {
+                AppResult.Error(Exception(response.message()))
+            }
+        } catch (e: Exception) {
+            AppResult.Error(e)
+        }
+    }
+
+    override suspend fun getTopRatedSeries(): AppResult<MovieResponse?> {
+        return try {
+            val response = api.getTopRatedSeries()
+            if (response.isSuccessful) {
+                AppResult.Success(response.body())
+            } else {
+                AppResult.Error(Exception(response.message()))
+            }
+        } catch (e: Exception) {
+            AppResult.Error(e)
+        }
+    }
 }

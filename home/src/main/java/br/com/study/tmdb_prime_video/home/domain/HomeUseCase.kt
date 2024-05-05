@@ -43,4 +43,31 @@ class HomeUseCase(private val repository: HomeRepository) {
             else -> null
         }
     }
+
+    suspend fun getOnTheAirSeries(): MovieResponse? {
+        return when (val moviesResult = repository.getOnTheAirSeries()) {
+            is AppResult.Success -> {
+                moviesResult.value
+            }
+            else -> null
+        }
+    }
+
+    suspend fun getPopularSeries(): MovieResponse? {
+        return when (val moviesResult = repository.getPopularSeries()) {
+            is AppResult.Success -> {
+                moviesResult.value
+            }
+            else -> null
+        }
+    }
+
+    suspend fun getTopRatedSeries(): MovieResponse? {
+        return when (val moviesResult = repository.getTopRatedSeries()) {
+            is AppResult.Success -> {
+                moviesResult.value
+            }
+            else -> null
+        }
+    }
 }

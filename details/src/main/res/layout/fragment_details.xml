@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    tools:context=".presentation.DetailsFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="100dp"
+        android:paddingTop="8dp">
+
+        <ImageView
+            android:id="@+id/iv_stream_image_topbar"
+            android:layout_width="26dp"
+            android:layout_height="26dp"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/ic_cast"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_profile_topbar"
+            app:layout_constraintEnd_toStartOf="@+id/iv_profile_topbar"
+            app:layout_constraintTop_toTopOf="@+id/iv_profile_topbar" />
+
+        <ImageView
+            android:id="@+id/iv_profile_topbar"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/ic_profile"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/iv_movie_image"
+            android:layout_width="0dp"
+            android:layout_height="120dp"
+            android:src="@drawable/app_logo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_movie_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_movie_image" />
+
+        <Button
+            android:id="@+id/bt_movie_play"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_movie_title" />
+
+        <Button
+            android:id="@+id/bt_movie_download"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bt_movie_play" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_movie_actions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bt_movie_download">
+
+        <ImageView
+            android:id="@+id/iv_movie_trailer"
+            android:layout_width="48dp"
+            android:layout_height="48dp" />
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

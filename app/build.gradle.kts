@@ -54,6 +54,7 @@ dependencies {
     implementation(project(":live-tv"))
     implementation(project(":downloads"))
     implementation(project(":search"))
+    implementation(project(":details"))
     implementation(project(":core"))
 
     implementation(libs.androidx.core.ktx)

@@ -26,11 +26,26 @@ interface HomeApi {
     @GET("$TOP_RATED_MOVIES$")
     suspend fun getTopRatedMovies(): Response<MovieResponse>
 
+    @Headers(BuildConfig.TMDB_BEARER)
+    @GET("$ON_THE_AIR_SERIES$")
+    suspend fun getOnTheAirSeries(): Response<MovieResponse>
+
+    @Headers(BuildConfig.TMDB_BEARER)
+    @GET("$POPULAR_SERIES$")
+    suspend fun getPopularSeries(): Response<MovieResponse>
+
+    @Headers(BuildConfig.TMDB_BEARER)
+    @GET("$TOP_RATED_SERIES$")
+    suspend fun getTopRatedSeries(): Response<MovieResponse>
+
     companion object {
 
         private const val POPULAR_MOVIES = "movie/popular?language=en-US&page=1"
         private const val NOW_PLAYING_MOVIES = "movie/now_playing?language=en-US&page=1"
         private const val UPCOMING_MOVIES = "movie/upcoming?language=en-US&page=1"
         private const val TOP_RATED_MOVIES = "movie/top_rated?language=en-US&page=1"
+        private const val ON_THE_AIR_SERIES = "tv/on_the_air?language=en-US&page=1"
+        private const val POPULAR_SERIES = "tv/popular?language=en-US&page=1"
+        private const val TOP_RATED_SERIES = "movie/top_rated?language=en-US&page=1"
     }
 }

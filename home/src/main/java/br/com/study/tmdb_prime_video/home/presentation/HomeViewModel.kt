@@ -29,18 +29,44 @@ class HomeViewModel(private val useCase: HomeUseCase) : ViewModel() {
         MutableStateFlow(BaseUiState.Success<MovieResponse?>(MovieResponse()))
     val topRatedMoviesUiState = _topRatedMoviesUiState.asStateFlow()
 
+    private val _onTheAirSeriesUiState =
+        MutableStateFlow(BaseUiState.Success<MovieResponse?>(MovieResponse()))
+    val onTheAirSeriesUiState = _onTheAirSeriesUiState.asStateFlow()
+
+    private val _popularSeriesUiState =
+        MutableStateFlow(BaseUiState.Success<MovieResponse?>(MovieResponse()))
+    val popularSeriesUiState = _popularSeriesUiState.asStateFlow()
+
+    private val _topRatedSeriesUiState =
+        MutableStateFlow(BaseUiState.Success<MovieResponse?>(MovieResponse()))
+    val topRatedSeriesUiState = _topRatedSeriesUiState.asStateFlow()
+
     fun getHomeMovies() {
         viewModelScope.launch {
             val popularMovies = async { useCase.getPopularMovies() }
             val nowPlayingMovies = async { useCase.getNowPlayingMovies() }
             val upcomingMovies = async { useCase.getUpcomingMovies() }
             val topRatedMovies = async { useCase.getTopRatedMovies() }
+            val onTheAirSeries = async { useCase.getOnTheAirSeries() }
+            val popularSeries = async { useCase.getPopularSeries() }
+            val topRatedSeries = async { useCase.getTopRatedSeries() }
             val movieRequestsResult =
-                awaitAll(popularMovies, nowPlayingMovies, upcomingMovies, topRatedMovies)
+                awaitAll(
+                    popularMovies,
+                    nowPlayingMovies,
+                    upcomingMovies,
+                    topRatedMovies,
+                    onTheAirSeries,
+                    popularSeries,
+                    topRatedSeries
+                )
             _popularMoviesUiState.value = BaseUiState.Success(movieRequestsResult[0])
             _nowPlayingMoviesUiState.value = BaseUiState.Success(movieRequestsResult[1])
             _upcomingMoviesUiState.value = BaseUiState.Success(movieRequestsResult[2])
             _topRatedMoviesUiState.value = BaseUiState.Success(movieRequestsResult[3])
+            _onTheAirSeriesUiState.value = BaseUiState.Success(movieRequestsResult[4])
+            _popularSeriesUiState.value = BaseUiState.Success(movieRequestsResult[5])
+            _topRatedSeriesUiState.value = BaseUiState.Success(movieRequestsResult[6])
         }
     }
 }

@@ -13,4 +13,10 @@ interface HomeRepository {
     suspend fun getUpcomingMovies(): AppResult<MovieResponse?>
 
     suspend fun getTopRatedMovies(): AppResult<MovieResponse?>
+
+    suspend fun getOnTheAirSeries(): AppResult<MovieResponse?>
+
+    suspend fun getPopularSeries(): AppResult<MovieResponse?>
+
+    suspend fun getTopRatedSeries(): AppResult<MovieResponse?>
 }

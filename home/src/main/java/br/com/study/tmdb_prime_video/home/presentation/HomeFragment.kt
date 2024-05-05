@@ -12,6 +12,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
@@ -115,6 +116,33 @@ class HomeFragment : Fragment() {
                 )
             ) as MovieResponse
         createMoviesList("Filmes com as melhores notas", topRatedMovies)
+
+        val onTheAirSeries =
+            parseJsonToModel(
+                readJsonFromAssets(
+                    requireContext(),
+                    "on_the_air_series_200.json"
+                )
+            ) as MovieResponse
+        createMoviesList("Séries em andamento", onTheAirSeries)
+
+        val popularSeries =
+            parseJsonToModel(
+                readJsonFromAssets(
+                    requireContext(),
+                    "popular_series_200.json"
+                )
+            ) as MovieResponse
+        createMoviesList("Séries mais populares", popularSeries)
+
+        val topRatedSeries =
+            parseJsonToModel(
+                readJsonFromAssets(
+                    requireContext(),
+                    "top_rated_series_200.json"
+                )
+            ) as MovieResponse
+        createMoviesList("Séries com as melhores notas", topRatedSeries)
     }
 
     private fun createMoviesList(title: String, movies: MovieResponse) {
@@ -147,7 +175,8 @@ class HomeFragment : Fragment() {
         }.apply {
             this.items = movies.results?.toMutableList()!!
             this.onClick = {
-                Toast.makeText(requireContext(), "lista ta aparecendo", Toast.LENGTH_SHORT).show()
+                findNavController()
+                    .navigate(R.id.action_fragment_home_to_fragment_details)
             }
         }
         rvMovies.setLayoutManager(layoutManager)
@@ -203,7 +232,7 @@ class HomeFragment : Fragment() {
                 override fun onPageSelected(position: Int) {
                     super.onPageSelected(position)
                     viewPagerHandler?.removeCallbacks(runnable)
-                    viewPagerHandler?.postDelayed(runnable, 1000)
+                    viewPagerHandler?.postDelayed(runnable, 4000)
 
                     updateDotIndicator(position)
                 }
@@ -243,7 +272,7 @@ class HomeFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        viewPagerHandler?.postDelayed(runnable, 1000)
+        viewPagerHandler?.postDelayed(runnable, 4000)
     }
 
     /*
@@ -277,6 +306,6 @@ class HomeFragment : Fragment() {
     companion object {
 
         @JvmStatic
-        fun newInstance(param1: String, param2: String) = HomeFragment().apply {}
+        fun newInstance() = HomeFragment().apply {}
     }
 }
