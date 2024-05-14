@@ -28,6 +28,11 @@ android {
                 "proguard-rules.pro"
             )
         }
+        create("mock") {
+            applicationIdSuffix = ".mock"
+            isDebuggable = true
+            signingConfig = signingConfigs.getByName("debug")
+        }
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -54,7 +59,6 @@ dependencies {
     implementation(project(":live-tv"))
     implementation(project(":downloads"))
     implementation(project(":search"))
-    implementation(project(":details"))
     implementation(project(":core"))
 
     implementation(libs.androidx.core.ktx)

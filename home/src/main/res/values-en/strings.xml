@@ -5,4 +5,13 @@
     <string name="button_filter_movies_text">Movies</string>
     <string name="button_filter_series_text">Series</string>
     <string name="button_filter_sports_text">Sports</string>
+
+    <!--  Lists titles  -->
+    <string name="popular_movies_list_title">Popular movies</string>
+    <string name="now_playing_movies_list_title">Now playing movies</string>
+    <string name="upcoming_movies_list_title">Upcoming movies</string>
+    <string name="top_rated_movies_list_title">Top rated movies</string>
+    <string name="on_the_air_series_list_title">On the air series</string>
+    <string name="popular_series_list_title">Popular series</string>
+    <string name="top_rated_series_list_title">Top rated series</string>
 </resources>

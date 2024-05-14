@@ -10,22 +10,25 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
 import br.com.study.tmdb_prime_video.core.base.BaseAdapter
-import br.com.study.tmdb_prime_video.core.mock.parseJsonToModel
-import br.com.study.tmdb_prime_video.core.mock.readJsonFromAssets
+import br.com.study.tmdb_prime_video.core.extension.parseJsonToModel
+import br.com.study.tmdb_prime_video.core.extension.readJsonFromAssets
 import br.com.study.tmdb_prime_video.home.R
 import br.com.study.tmdb_prime_video.home.data.model.MovieResponse
 import br.com.study.tmdb_prime_video.home.databinding.FragmentHomeBinding
 import br.com.study.tmdb_prime_video.home.presentation.adapter.FeaturedMoviesAdapter
 import br.com.study.tmdb_prime_video.home.presentation.adapter.MovieCoverAdapter
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import kotlin.math.abs
 
@@ -61,26 +64,55 @@ class HomeFragment : Fragment() {
 
     private fun getFeaturedMovies() {
         homeViewModel.getHomeMovies()
-//        lifecycleScope.launchWhenStarted {
-//            homeViewModel.popularMoviesUiState.collectLatest { popularMovies ->
-//                println(">>>> popularMovies " + popularMovies.data)
-//            }
-//        }
-//        lifecycleScope.launchWhenStarted {
-//            homeViewModel.nowPlayingMoviesUiState.collectLatest { nowPlayingMovies ->
-//                println(">>>> nowPlayingMovies " + nowPlayingMovies.data)
-//            }
-//        }
-//        lifecycleScope.launchWhenStarted {
-//            homeViewModel.upcomingMoviesUiState.collectLatest { upcomingMovies ->
-//                println(">>>> upcomingMovies " + upcomingMovies.data)
-//            }
-//        }
-//        lifecycleScope.launchWhenStarted {
-//            homeViewModel.topRatedMoviesUiState.collectLatest { topRatedMovies ->
-//                println(">>>> topRatedMovies " + topRatedMovies.data)
-//            }
-//        }
+        lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                homeViewModel.popularMoviesUiState.collectLatest { popularMovies ->
+                    createMoviesList(getString(R.string.popular_movies_list_title), popularMovies.data)
+                }
+            }
+        }
+        lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                homeViewModel.nowPlayingMoviesUiState.collectLatest { nowPlayingMovies ->
+                    createMoviesList(getString(R.string.now_playing_movies_list_title), nowPlayingMovies.data)
+                }
+            }
+        }
+        lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                homeViewModel.upcomingMoviesUiState.collectLatest { upcomingMovies ->
+                    createMoviesList(getString(R.string.upcoming_movies_list_title), upcomingMovies.data)
+                }
+            }
+        }
+        lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                homeViewModel.topRatedMoviesUiState.collectLatest { topRatedMovies ->
+                    createMoviesList(getString(R.string.top_rated_movies_list_title), topRatedMovies.data)
+                }
+            }
+        }
+        lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                homeViewModel.onTheAirSeriesUiState.collectLatest { onTheAirSeries ->
+                    createMoviesList(getString(R.string.on_the_air_series_list_title), onTheAirSeries.data)
+                }
+            }
+        }
+        lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                homeViewModel.popularSeriesUiState.collectLatest { popularSeries ->
+                    createMoviesList(getString(R.string.popular_series_list_title), popularSeries.data)
+                }
+            }
+        }
+        lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                homeViewModel.topRatedSeriesUiState.collectLatest { topRatedSeries ->
+                    createMoviesList(getString(R.string.top_rated_series_list_title), topRatedSeries.data)
+                }
+            }
+        }
         val popularMovies =
             parseJsonToModel(
                 readJsonFromAssets(
@@ -88,7 +120,6 @@ class HomeFragment : Fragment() {
                     "popular_movies_200.json"
                 )
             ) as MovieResponse
-        createMoviesList("Filmes mais populares", popularMovies)
 
         val nowPlayingMovies =
             parseJsonToModel(
@@ -97,7 +128,6 @@ class HomeFragment : Fragment() {
                     "now_playing_movies_200.json"
                 )
             ) as MovieResponse
-        createMoviesList("Filmes em destaque", nowPlayingMovies)
 
         val upcomingMovies =
             parseJsonToModel(
@@ -106,7 +136,7 @@ class HomeFragment : Fragment() {
                     "upcoming_movies_200.json"
                 )
             ) as MovieResponse
-        createMoviesList("Prévias", upcomingMovies)
+
 
         val topRatedMovies =
             parseJsonToModel(
@@ -115,7 +145,7 @@ class HomeFragment : Fragment() {
                     "top_rated_movies_200.json"
                 )
             ) as MovieResponse
-        createMoviesList("Filmes com as melhores notas", topRatedMovies)
+
 
         val onTheAirSeries =
             parseJsonToModel(
@@ -124,7 +154,6 @@ class HomeFragment : Fragment() {
                     "on_the_air_series_200.json"
                 )
             ) as MovieResponse
-        createMoviesList("Séries em andamento", onTheAirSeries)
 
         val popularSeries =
             parseJsonToModel(
@@ -133,7 +162,6 @@ class HomeFragment : Fragment() {
                     "popular_series_200.json"
                 )
             ) as MovieResponse
-        createMoviesList("Séries mais populares", popularSeries)
 
         val topRatedSeries =
             parseJsonToModel(
@@ -142,10 +170,9 @@ class HomeFragment : Fragment() {
                     "top_rated_series_200.json"
                 )
             ) as MovieResponse
-        createMoviesList("Séries com as melhores notas", topRatedSeries)
     }
 
-    private fun createMoviesList(title: String, movies: MovieResponse) {
+    private fun createMoviesList(title: String, movies: MovieResponse?) {
         val listTitle = TextView(requireContext())
         val listTitleParams = LinearLayout.LayoutParams(
             RecyclerView.LayoutParams.WRAP_CONTENT,
@@ -173,10 +200,13 @@ class HomeFragment : Fragment() {
         rvMovies.adapter = BaseAdapter {
             MovieCoverAdapter(it)
         }.apply {
-            this.items = movies.results?.toMutableList()!!
-            this.onClick = {
-                findNavController()
-                    .navigate(R.id.action_fragment_home_to_fragment_details)
+             movies?.results.let { movieData ->
+                if (movieData != null) {
+                    this.items = movieData.toMutableList()
+                }
+                this.onClick = {
+
+                }
             }
         }
         rvMovies.setLayoutManager(layoutManager)
@@ -274,19 +304,6 @@ class HomeFragment : Fragment() {
         super.onResume()
         viewPagerHandler?.postDelayed(runnable, 4000)
     }
-
-    /*
-        Listas a serem criadas
-            Filmes
-                Now playing como Filmes em destaque
-                Popular como Filmes mais populares
-                Upcoming como Prévias
-                Top Rated como Filmes com as melhores notas
-            Séries
-                On the Air como Séries em andamento
-                Popular como Séries mais populares
-                Top Rated como Séries com as melhores notas
-     */
 
     private fun imagesTest(): ArrayList<String> {
         return arrayListOf(

@@ -1,6 +1,8 @@
 package br.com.study.tmdb_prime_video.core.di
 
+import br.com.study.tmdb_prime_video.core.BuildConfig
 import okhttp3.OkHttpClient
+import okhttp3.Request
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -15,6 +17,11 @@ object NetworkModule {
                 .Builder()
                 .readTimeout(60, TimeUnit.SECONDS)
                 .connectTimeout(60, TimeUnit.SECONDS)
+                .addInterceptor {
+                    val request: Request =
+                        it.request().newBuilder().addHeader("Authorization", BuildConfig.TMDB_BEARER).build()
+                    it.proceed(request)
+                }
                 .build()
         }
 
@@ -36,6 +43,6 @@ object NetworkModule {
 
         single { provideHttpClient() }
         single { provideConverterFactory() }
-        single { provideRetrofit(get(),get()) }
+        single { provideRetrofit(get(), get()) }
     }
 }

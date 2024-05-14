@@ -5,4 +5,13 @@
     <string name="button_filter_movies_text">Filmes</string>
     <string name="button_filter_series_text">Séries</string>
     <string name="button_filter_sports_text">Esportes</string>
+
+    <!--  Títulos de listas  -->
+    <string name="popular_movies_list_title">Filmes mais populares</string>
+    <string name="now_playing_movies_list_title">Filmes em destaque</string>
+    <string name="upcoming_movies_list_title">Prévias</string>
+    <string name="top_rated_movies_list_title">Filmes com as melhores notas</string>
+    <string name="on_the_air_series_list_title">Séries em andamento</string>
+    <string name="popular_series_list_title">Séries mais populares</string>
+    <string name="top_rated_series_list_title">Séries com as melhores notas</string>
 </resources>

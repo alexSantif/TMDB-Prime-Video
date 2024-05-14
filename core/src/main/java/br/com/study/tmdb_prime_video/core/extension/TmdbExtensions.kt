@@ -1,4 +1,4 @@
-package br.com.study.tmdb_prime_video.core.mock
+package br.com.study.tmdb_prime_video.core.extension
 
 import android.content.Context
 import com.google.gson.Gson

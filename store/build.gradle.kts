@@ -22,6 +22,8 @@ android {
                 "proguard-rules.pro"
             )
         }
+
+        create("mock") {}
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8

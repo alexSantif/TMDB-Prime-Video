@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
             binding.bnMenu, navController
         )
 
-        binding.bnMenu.setOnNavigationItemSelectedListener {item ->
+        binding.bnMenu.setOnItemSelectedListener {item ->
             when(item.itemId) {
                 R.id.fragment_home -> {
 
