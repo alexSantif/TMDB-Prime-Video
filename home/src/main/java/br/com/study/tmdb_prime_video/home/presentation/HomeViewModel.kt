@@ -80,9 +80,14 @@ class HomeViewModel(private val useCase: HomeUseCase) : ViewModel() {
 
     private fun setImageSliderData(moviesList: MovieResponse?): ImagesMoviesModel {
         val imagesList = mutableListOf<String?>()
-        for (i in 0 until 10) {
+        for (i in 0 until IMAGES_LIST_SIZE) {
             imagesList.add(moviesList?.results?.get(i)?.backdropPath)
         }
         return ImagesMoviesModel(imagesList)
+    }
+
+    private companion object {
+
+        const val IMAGES_LIST_SIZE = 10
     }
 }

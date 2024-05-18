@@ -16,7 +16,7 @@ import com.google.gson.Gson
 class HomeRepositoryImpl(private val api: HomeApi) : HomeRepository {
 
     override suspend fun getPopularMovies(): AppResult<MovieResponse?> {
-        return if (BuildConfig.BUILD_TYPE == "mock") {
+        return if (BuildConfig.BUILD_TYPE == BUILD_VARIANT_MOCK) {
             AppResult.Success(Gson().fromJson(getPopularMoviesMock(), MovieResponse::class.java))
         } else {
             try {
@@ -33,7 +33,7 @@ class HomeRepositoryImpl(private val api: HomeApi) : HomeRepository {
     }
 
     override suspend fun getNowPlayingMovies(): AppResult<MovieResponse?> {
-        return if (BuildConfig.BUILD_TYPE == "mock") {
+        return if (BuildConfig.BUILD_TYPE == BUILD_VARIANT_MOCK) {
             AppResult.Success(Gson().fromJson(getNowPlayingMoviesMock(), MovieResponse::class.java))
         } else {
             try {
@@ -50,7 +50,7 @@ class HomeRepositoryImpl(private val api: HomeApi) : HomeRepository {
     }
 
     override suspend fun getUpcomingMovies(): AppResult<MovieResponse?> {
-        return if (BuildConfig.BUILD_TYPE == "mock") {
+        return if (BuildConfig.BUILD_TYPE == BUILD_VARIANT_MOCK) {
             AppResult.Success(Gson().fromJson(getUpcomingMoviesMock(), MovieResponse::class.java))
         } else {
             try {
@@ -67,7 +67,7 @@ class HomeRepositoryImpl(private val api: HomeApi) : HomeRepository {
     }
 
     override suspend fun getTopRatedMovies(): AppResult<MovieResponse?> {
-        return if (BuildConfig.BUILD_TYPE == "mock") {
+        return if (BuildConfig.BUILD_TYPE == BUILD_VARIANT_MOCK) {
             AppResult.Success(Gson().fromJson(getTopRatedMoviesMock(), MovieResponse::class.java))
         } else {
             try {
@@ -84,7 +84,7 @@ class HomeRepositoryImpl(private val api: HomeApi) : HomeRepository {
     }
 
     override suspend fun getOnTheAirSeries(): AppResult<MovieResponse?> {
-        return if (BuildConfig.BUILD_TYPE == "mock") {
+        return if (BuildConfig.BUILD_TYPE == BUILD_VARIANT_MOCK) {
             AppResult.Success(Gson().fromJson(getOnTheAirSeriesMock(), MovieResponse::class.java))
         } else {
             try {
@@ -101,7 +101,7 @@ class HomeRepositoryImpl(private val api: HomeApi) : HomeRepository {
     }
 
     override suspend fun getPopularSeries(): AppResult<MovieResponse?> {
-        return if (BuildConfig.BUILD_TYPE == "mock") {
+        return if (BuildConfig.BUILD_TYPE == BUILD_VARIANT_MOCK) {
             AppResult.Success(Gson().fromJson(getPopularSeriesMock(), MovieResponse::class.java))
         } else {
             try {
@@ -118,7 +118,7 @@ class HomeRepositoryImpl(private val api: HomeApi) : HomeRepository {
     }
 
     override suspend fun getTopRatedSeries(): AppResult<MovieResponse?> {
-        return if (BuildConfig.BUILD_TYPE == "mock") {
+        return if (BuildConfig.BUILD_TYPE == BUILD_VARIANT_MOCK) {
             AppResult.Success(Gson().fromJson(getTopRatedSeriesMock(), MovieResponse::class.java))
         } else {
             try {
@@ -132,5 +132,10 @@ class HomeRepositoryImpl(private val api: HomeApi) : HomeRepository {
                 AppResult.Error(e)
             }
         }
+    }
+
+    companion object {
+
+        const val BUILD_VARIANT_MOCK = "mock"
     }
 }

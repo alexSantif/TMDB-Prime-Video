@@ -10,16 +10,19 @@ import java.util.concurrent.TimeUnit
 
 object NetworkModule {
 
+    private const val REQUEST_HEADER = "Authorization"
+    private const val TIMEOUT_TIME = 60L
+
     val instance = module {
 
         fun provideHttpClient(): OkHttpClient {
             return OkHttpClient
                 .Builder()
-                .readTimeout(60, TimeUnit.SECONDS)
-                .connectTimeout(60, TimeUnit.SECONDS)
+                .readTimeout(TIMEOUT_TIME, TimeUnit.SECONDS)
+                .connectTimeout(TIMEOUT_TIME, TimeUnit.SECONDS)
                 .addInterceptor {
                     val request: Request =
-                        it.request().newBuilder().addHeader("Authorization", BuildConfig.TMDB_BEARER).build()
+                        it.request().newBuilder().addHeader(REQUEST_HEADER, BuildConfig.TMDB_BEARER).build()
                     it.proceed(request)
                 }
                 .build()
@@ -35,7 +38,7 @@ object NetworkModule {
             gsonConverterFactory: GsonConverterFactory
         ): Retrofit {
             return Retrofit.Builder()
-                .baseUrl("https://api.themoviedb.org/3/")
+                .baseUrl(BuildConfig.BASE_URL)
                 .client(okHttpClient)
                 .addConverterFactory(gsonConverterFactory)
                 .build()

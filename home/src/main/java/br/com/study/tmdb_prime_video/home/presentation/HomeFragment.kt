@@ -71,11 +71,11 @@ class HomeFragment : Fragment() {
                 when (tabItem?.position) {
                     0 -> showFilteredItems(homeItems)
                     1 -> showFilteredItems(homeItems.filter {
-                        it.type == "Filmes"
+                        it.type == MOVIES_TYPE
                     })
 
                     2 -> showFilteredItems(homeItems.filter {
-                        it.type == "Series"
+                        it.type == SERIES_TYPE
                     })
 
                     else -> showFilteredItems(homeItems)
@@ -122,49 +122,77 @@ class HomeFragment : Fragment() {
         lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 homeViewModel.popularMoviesUiState.collectLatest { popularMovies ->
-                    addToHomeItems("Filmes", getString(R.string.popular_movies_list_title), popularMovies.data?.results)
+                    addToHomeItems(
+                        MOVIES_TYPE,
+                        getString(R.string.popular_movies_list_title),
+                        popularMovies.data?.results
+                    )
                 }
             }
         }
         lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 homeViewModel.nowPlayingMoviesUiState.collectLatest { nowPlayingMovies ->
-                    addToHomeItems("Filmes", getString(R.string.now_playing_movies_list_title), nowPlayingMovies.data?.results)
+                    addToHomeItems(
+                        MOVIES_TYPE,
+                        getString(R.string.now_playing_movies_list_title),
+                        nowPlayingMovies.data?.results
+                    )
                 }
             }
         }
         lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 homeViewModel.upcomingMoviesUiState.collectLatest { upcomingMovies ->
-                    addToHomeItems("Filmes", getString(R.string.upcoming_movies_list_title), upcomingMovies.data?.results)
+                    addToHomeItems(
+                        MOVIES_TYPE,
+                        getString(R.string.upcoming_movies_list_title),
+                        upcomingMovies.data?.results
+                    )
                 }
             }
         }
         lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 homeViewModel.topRatedMoviesUiState.collectLatest { topRatedMovies ->
-                    addToHomeItems("Filmes", getString(R.string.top_rated_movies_list_title), topRatedMovies.data?.results)
+                    addToHomeItems(
+                        MOVIES_TYPE,
+                        getString(R.string.top_rated_movies_list_title),
+                        topRatedMovies.data?.results
+                    )
                 }
             }
         }
         lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 homeViewModel.onTheAirSeriesUiState.collectLatest { onTheAirSeries ->
-                    addToHomeItems("Series", getString(R.string.on_the_air_series_list_title), onTheAirSeries.data?.results)
+                    addToHomeItems(
+                        SERIES_TYPE,
+                        getString(R.string.on_the_air_series_list_title),
+                        onTheAirSeries.data?.results
+                    )
                 }
             }
         }
         lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 homeViewModel.popularSeriesUiState.collectLatest { popularSeries ->
-                    addToHomeItems("Series", getString(R.string.popular_series_list_title), popularSeries.data?.results)
+                    addToHomeItems(
+                        SERIES_TYPE,
+                        getString(R.string.popular_series_list_title),
+                        popularSeries.data?.results
+                    )
                 }
             }
         }
         lifecycleScope.launch {
             lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 homeViewModel.topRatedSeriesUiState.collectLatest { topRatedSeries ->
-                    addToHomeItems("Series", getString(R.string.top_rated_series_list_title), topRatedSeries.data?.results)
+                    addToHomeItems(
+                        SERIES_TYPE,
+                        getString(R.string.top_rated_series_list_title),
+                        topRatedSeries.data?.results
+                    )
                 }
             }
         }
@@ -311,6 +339,8 @@ class HomeFragment : Fragment() {
     companion object {
 
         const val VIEW_PAGER_IMAGE_TIME = 4000L
+        const val MOVIES_TYPE = "Filmes"
+        const val SERIES_TYPE = "Series"
 
         @JvmStatic
         fun newInstance() = HomeFragment().apply {}

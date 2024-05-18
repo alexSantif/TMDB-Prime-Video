@@ -3,8 +3,7 @@ package br.com.study.tmdb_prime_video.home.presentation.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewpager2.widget.ViewPager2
-import br.com.study.tmdb_prime_video.home.R
+import br.com.study.tmdb_prime_video.core.BuildConfig
 import br.com.study.tmdb_prime_video.home.databinding.ImageSliderItemBinding
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
@@ -12,14 +11,13 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 class FeaturedMoviesAdapter(private val imageUrlList: MutableList<String?>?) :
     RecyclerView.Adapter<FeaturedMoviesAdapter.ViewPagerViewHolder>() {
 
-    inner class ViewPagerViewHolder(val binding: ImageSliderItemBinding) :
+    inner class ViewPagerViewHolder(private val binding: ImageSliderItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun setData(imageUrl: String) {
 
             Glide.with(binding.root.context)
-                .load("https://image.tmdb.org/t/p/original" + imageUrl)
-//                .error(R.drawable.ic_baseline_error_outline_24)
+                .load("${BuildConfig.IMAGES_BASE_URL}$imageUrl")
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(binding.ivImage)
         }
@@ -42,5 +40,10 @@ class FeaturedMoviesAdapter(private val imageUrlList: MutableList<String?>?) :
     override fun onBindViewHolder(holder: ViewPagerViewHolder, position: Int) {
 
         imageUrlList?.get(position)?.let { holder.setData(it) }
+    }
+
+    companion object {
+
+        const val IMAGES_BASE_URL = "https://image.tmdb.org/t/p/original"
     }
 }

@@ -18,6 +18,16 @@ android {
             "TMDB_BEARER",
             "\"${project.findProperty("TMDB_BEARER")}\""
         )
+        buildConfigField(
+            "String",
+            "BASE_URL",
+            "\"https://api.themoviedb.org/3/\""
+        )
+        buildConfigField(
+            "String",
+            "IMAGES_BASE_URL",
+            "\"https://image.tmdb.org/t/p/original\""
+        )
     }
 
     buildTypes {
