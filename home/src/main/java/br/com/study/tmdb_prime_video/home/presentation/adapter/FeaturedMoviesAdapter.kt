@@ -9,7 +9,7 @@ import br.com.study.tmdb_prime_video.home.databinding.ImageSliderItemBinding
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 
-class FeaturedMoviesAdapter(private val imageUrlList: MutableList<String>, private val viewPager2: ViewPager2) :
+class FeaturedMoviesAdapter(private val imageUrlList: MutableList<String?>?) :
     RecyclerView.Adapter<FeaturedMoviesAdapter.ViewPagerViewHolder>() {
 
     inner class ViewPagerViewHolder(val binding: ImageSliderItemBinding) :
@@ -18,7 +18,7 @@ class FeaturedMoviesAdapter(private val imageUrlList: MutableList<String>, priva
         fun setData(imageUrl: String) {
 
             Glide.with(binding.root.context)
-                .load(imageUrl)
+                .load("https://image.tmdb.org/t/p/original" + imageUrl)
 //                .error(R.drawable.ic_baseline_error_outline_24)
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(binding.ivImage)
@@ -26,7 +26,7 @@ class FeaturedMoviesAdapter(private val imageUrlList: MutableList<String>, priva
 
     }
 
-    override fun getItemCount(): Int = imageUrlList.size
+    override fun getItemCount(): Int = imageUrlList?.size ?: 0
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewPagerViewHolder {
 
@@ -41,15 +41,6 @@ class FeaturedMoviesAdapter(private val imageUrlList: MutableList<String>, priva
 
     override fun onBindViewHolder(holder: ViewPagerViewHolder, position: Int) {
 
-        holder.setData(imageUrlList[position])
-
-        if (position == imageUrlList.size - 2) {
-            viewPager2.post(runnable)
-        }
-    }
-
-    private val runnable = Runnable {
-        imageUrlList.addAll(imageUrlList)
-        notifyDataSetChanged()
+        imageUrlList?.get(position)?.let { holder.setData(it) }
     }
 }

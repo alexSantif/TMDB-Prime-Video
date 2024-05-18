@@ -3,6 +3,7 @@ package br.com.study.tmdb_prime_video.home.presentation
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.study.tmdb_prime_video.core.base.BaseUiState
+import br.com.study.tmdb_prime_video.home.data.model.ImagesMoviesModel
 import br.com.study.tmdb_prime_video.home.data.model.MovieResponse
 import br.com.study.tmdb_prime_video.home.domain.HomeUseCase
 import kotlinx.coroutines.async
@@ -41,6 +42,10 @@ class HomeViewModel(private val useCase: HomeUseCase) : ViewModel() {
         MutableStateFlow(BaseUiState.Success<MovieResponse?>(MovieResponse()))
     val topRatedSeriesUiState = _topRatedSeriesUiState.asStateFlow()
 
+    private val _imagesMoviesUiState =
+        MutableStateFlow(BaseUiState.Success<ImagesMoviesModel?>(ImagesMoviesModel()))
+    val imagesMoviesUiState = _imagesMoviesUiState.asStateFlow()
+
     fun getHomeMovies() {
         viewModelScope.launch {
             val popularMovies = async { useCase.getPopularMovies() }
@@ -60,6 +65,9 @@ class HomeViewModel(private val useCase: HomeUseCase) : ViewModel() {
                     popularSeries,
                     topRatedSeries
                 )
+
+            _imagesMoviesUiState.value = BaseUiState.Success(setImageSliderData(movieRequestsResult[0]))
+
             _popularMoviesUiState.value = BaseUiState.Success(movieRequestsResult[0])
             _nowPlayingMoviesUiState.value = BaseUiState.Success(movieRequestsResult[1])
             _upcomingMoviesUiState.value = BaseUiState.Success(movieRequestsResult[2])
@@ -68,5 +76,13 @@ class HomeViewModel(private val useCase: HomeUseCase) : ViewModel() {
             _popularSeriesUiState.value = BaseUiState.Success(movieRequestsResult[5])
             _topRatedSeriesUiState.value = BaseUiState.Success(movieRequestsResult[6])
         }
+    }
+
+    private fun setImageSliderData(moviesList: MovieResponse?): ImagesMoviesModel {
+        val imagesList = mutableListOf<String?>()
+        for (i in 0 until 10) {
+            imagesList.add(moviesList?.results?.get(i)?.backdropPath)
+        }
+        return ImagesMoviesModel(imagesList)
     }
 }

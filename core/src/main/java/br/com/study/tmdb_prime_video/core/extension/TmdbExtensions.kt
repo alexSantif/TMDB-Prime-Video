@@ -1,14 +1,23 @@
 package br.com.study.tmdb_prime_video.core.extension
 
-import android.content.Context
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
+import android.view.View
+import android.view.ViewGroup
 
-inline fun <reified T> parseJsonToModel(jsonString: String): T {
-    val gson = Gson()
-    return gson.fromJson(jsonString, object : TypeToken<T>() {}.type)
-}
+fun View.setMargins(
+    left: Int? = null,
+    top: Int? = null,
+    right: Int? = null,
+    bottom: Int? = null
+) {
+    val lp = layoutParams as? ViewGroup.MarginLayoutParams
+        ?: return
 
-fun readJsonFromAssets(context: Context, fileName: String): String {
-    return context.assets.open(fileName).bufferedReader().use { it.readText() }
+    lp.setMargins(
+        left ?: lp.leftMargin,
+        top ?: lp.topMargin,
+        right ?: lp.rightMargin,
+        bottom ?: lp.bottomMargin
+    )
+
+    layoutParams = lp
 }
