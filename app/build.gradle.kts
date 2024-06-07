@@ -50,6 +50,8 @@ android {
     buildFeatures {
         viewBinding = true
     }
+
+    testBuildType = "mock"
 }
 
 dependencies {
@@ -72,6 +74,7 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation(libs.fragment.testing)
 
     implementation(libs.koin.core)
     implementation(libs.koin.android)
