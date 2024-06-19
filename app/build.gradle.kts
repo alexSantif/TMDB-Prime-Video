@@ -44,12 +44,15 @@ android {
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            excludes.add("META-INF/*")
         }
     }
 
     buildFeatures {
         viewBinding = true
     }
+
+    testOptions { packagingOptions { jniLibs { useLegacyPackaging = true } } }
 
     testBuildType = "mock"
 }
@@ -72,9 +75,11 @@ dependencies {
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
     testImplementation(libs.junit)
+    testImplementation(libs.mockk)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    androidTestImplementation(libs.fragment.testing)
+    implementation(libs.fragment.testing)
+    androidTestImplementation(libs.mockk.android)
 
     implementation(libs.koin.core)
     implementation(libs.koin.android)
